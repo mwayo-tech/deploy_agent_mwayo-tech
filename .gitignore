@@ -1,2 +1,5 @@
 *.tar.gz
-
+attendance_checker.py
+assets.csv
+config.json
+reports.log
