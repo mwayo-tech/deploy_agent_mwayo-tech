@@ -103,12 +103,32 @@ echo "--- Attendance Report Initialized ---" > "$MAIN_DIR/reports/reports.log"
 
 
 read -p "Would you like to update attendence thresholds? (y/n): " answer
+
 if [ "$answer" = "y" ]; then
 read -p "Enter warning threshold (default 75): " warning
 read -p "enter failure threshold (default 50): " failure
-
-[ -z "$warning" ] && warning=75 
+[ -z "$warning" ] && warning=75
 [ -z "$failure" ] && failure=50
+
+if ! [[ "$warning" =~ ^[0-9]+$ ]]; then
+    echo "Error: Warning threshold must be a number."
+    exit 1
+fi
+
+if ! [[ "$failure" =~ ^[0-9]+$ ]]; then
+    echo "Error: Failure threshold must be a number."
+    exit 1
+fi
+
+if [ "$warning" -lt 0 ] || [ "$warning" -gt 100 ]; then
+    echo "Error: Warning threshold must be between 0 and 100."
+    exit 1
+fi
+
+if [ "$failure" -lt 0 ] || [ "$failure" -gt 100 ]; then
+    echo "Error: Failure threshold must be between 0 and 100."
+    exit 1
+fi 
 
 sed -i "s/\"warning\": 75/\"warning\": $warning/" "$MAIN_DIR/Helpers/config.json"
 sed -i "s/\"failure\": 50/\"failure\": $failure/" "$MAIN_DIR/Helpers/config.json"
