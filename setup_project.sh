@@ -24,10 +24,10 @@ echo "Creating project structure..."
 mkdir -p "$MAIN_DIR/Helpers"
 mkdir -p "$MAIN_DIR/reports"
 
-touch attendance_checker.py "$MAIN_DIR/"
-touch assets.csv "$MAIN_DIR/Helpers/"
-touch config.json "$MAIN_DIR/Helpers/"
-touch reports.log "$MAIN_DIR/reports/"
+touch "$MAIN_DIR/attendance_checker.py"
+touch "$MAIN_DIR/Helpers/assets.csv"
+touch "$MAIN_DIR/Helpers/config.json"
+touch "$MAIN_DIR/reports/reports.log"
 
 cat > "$MAIN_DIR/attendance_checker.py" << 'EOF'
 import csv
@@ -107,6 +107,7 @@ read -p "Would you like to update attendence thresholds? (y/n): " answer
 if [ "$answer" = "y" ]; then
 read -p "Enter warning threshold (default 75): " warning
 read -p "enter failure threshold (default 50): " failure
+
 [ -z "$warning" ] && warning=75
 [ -z "$failure" ] && failure=50
 
